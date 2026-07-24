@@ -10,7 +10,10 @@ import {
 } from "react-router"
 
 import { AppShell } from "@/components/common/app-shell"
-import { FavoritesProvider } from "@/features/favorites/context/favorites-context"
+import {
+	FavoritesProvider,
+	useFavorites,
+} from "@/features/favorites/context/favorites-context"
 import { queryClient } from "@/query-client"
 
 import "./app.css"
@@ -37,11 +40,19 @@ export default function Root() {
 	return (
 		<QueryClientProvider client={queryClient}>
 			<FavoritesProvider>
-				<AppShell>
-					<Outlet />
-				</AppShell>
+				<RootContent />
 			</FavoritesProvider>
 		</QueryClientProvider>
+	)
+}
+
+function RootContent() {
+	const { favoriteCount } = useFavorites()
+
+	return (
+		<AppShell favoriteCount={favoriteCount}>
+			<Outlet />
+		</AppShell>
 	)
 }
 

@@ -1,5 +1,5 @@
-import type { Movie, PaginatedMovies } from "../model/movie"
-import type { MovieDto, MoviePageDto } from "./movies-dto"
+import type { Movie, MovieDetails, PaginatedMovies } from "../model/movie"
+import type { MovieDetailsDto, MovieDto, MoviePageDto } from "./movies-dto"
 
 function mapReleaseYear(releaseDate: string): number | null {
 	const year = Number(releaseDate.slice(0, 4))
@@ -22,5 +22,17 @@ export function mapMoviePageDto(dto: MoviePageDto): PaginatedMovies {
 		page: dto.page,
 		totalPages: Math.min(Math.max(dto.total_pages, 1), 500),
 		totalResults: Math.max(dto.total_results, 0),
+	}
+}
+
+export function mapMovieDetailsDto(dto: MovieDetailsDto): MovieDetails {
+	return {
+		...mapMovieDto(dto),
+		backdropPath: dto.backdrop_path,
+		genres: dto.genres.map(({ id, name }) => ({ id, name })),
+		overview: dto.overview,
+		releaseDate: dto.release_date || null,
+		runtime: dto.runtime,
+		tagline: dto.tagline || null,
 	}
 }

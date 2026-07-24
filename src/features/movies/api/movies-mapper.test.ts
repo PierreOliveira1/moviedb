@@ -1,6 +1,10 @@
 import { describe, expect, it } from "@jest/globals"
 
-import { mapMovieDto, mapMoviePageDto } from "./movies-mapper"
+import {
+	mapMovieDetailsDto,
+	mapMovieDto,
+	mapMoviePageDto,
+} from "./movies-mapper"
 
 const movieDto = {
 	id: 693134,
@@ -30,5 +34,25 @@ describe("movies mapper", () => {
 				total_results: 14_000,
 			}).totalPages,
 		).toBe(500)
+	})
+
+	it("maps movie details without leaking the DTO", () => {
+		expect(
+			mapMovieDetailsDto({
+				...movieDto,
+				backdrop_path: "/backdrop.jpg",
+				genres: [{ id: 878, name: "Ficção científica" }],
+				overview: "Overview",
+				runtime: 167,
+				tagline: "Tagline",
+			}),
+		).toMatchObject({
+			backdropPath: "/backdrop.jpg",
+			genres: [{ id: 878, name: "Ficção científica" }],
+			overview: "Overview",
+			releaseDate: "2024-02-27",
+			runtime: 167,
+			tagline: "Tagline",
+		})
 	})
 })

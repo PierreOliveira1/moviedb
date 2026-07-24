@@ -9,6 +9,7 @@ import {
 import { loadFavoriteIds, saveFavoriteIds } from "./favorites-storage"
 
 type FavoritesContextValue = {
+	favoriteCount: number
 	isFavorite: (movieId: number) => boolean
 	toggleFavorite: (movieId: number) => void
 }
@@ -39,6 +40,7 @@ export function FavoritesProvider({ children }: PropsWithChildren) {
 	return (
 		<FavoritesContext
 			value={{
+				favoriteCount: favoriteIds.size,
 				isFavorite: (movieId) => favoriteIds.has(movieId),
 				toggleFavorite,
 			}}

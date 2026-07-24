@@ -12,3 +12,14 @@ export type MoviePageDto = {
 	total_pages: number
 	total_results: number
 }
+
+export type MovieDetailsDto = MovieDto & {
+	backdrop_path: string | null
+	genres: Array<{
+		id: number
+		name: string
+	}>
+	overview: string
+	runtime: number | null
+	tagline: string
+}

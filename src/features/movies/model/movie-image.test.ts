@@ -1,6 +1,6 @@
 import { describe, expect, it } from "@jest/globals"
 
-import { getMoviePosterUrl } from "./movie-image"
+import { getMovieBackdropUrl, getMoviePosterUrl } from "./movie-image"
 
 describe("getMoviePosterUrl", () => {
 	it("builds a w300 TMDB image URL", () => {
@@ -11,5 +11,11 @@ describe("getMoviePosterUrl", () => {
 
 	it("returns null when no poster is available", () => {
 		expect(getMoviePosterUrl(null)).toBeNull()
+	})
+
+	it("builds an original TMDB backdrop URL", () => {
+		expect(getMovieBackdropUrl("/backdrop.jpg")).toBe(
+			"https://image.tmdb.org/t/p/original/backdrop.jpg",
+		)
 	})
 })

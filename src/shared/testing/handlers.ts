@@ -1,6 +1,10 @@
 import { HttpResponse, http, type RequestHandler } from "msw"
 
-import { popularMoviesResponse, searchMoviesResponse } from "./test-data"
+import {
+	movieDetailsResponse,
+	popularMoviesResponse,
+	searchMoviesResponse,
+} from "./test-data"
 
 export const handlers: RequestHandler[] = [
 	http.get("https://api.themoviedb.org/3/movie/popular", ({ request }) => {
@@ -26,4 +30,7 @@ export const handlers: RequestHandler[] = [
 
 		return HttpResponse.json(searchMoviesResponse)
 	}),
+	http.get("https://api.themoviedb.org/3/movie/:id", () =>
+		HttpResponse.json(movieDetailsResponse),
+	),
 ]

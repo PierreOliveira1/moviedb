@@ -1,10 +1,15 @@
 import { beforeEach, describe, expect, it } from "@jest/globals"
 import { screen } from "@testing-library/react"
+import { useLocation } from "react-router"
 
 import { FavoritesProvider } from "@/features/favorites/context/favorites-context"
 import { renderWithProviders } from "@/shared/testing/render-with-providers"
 
 import HomeRoute from "./route"
+
+function LocationProbe() {
+	return <output data-testid="location">{useLocation().pathname}</output>
+}
 
 describe("HomeRoute", () => {
 	beforeEach(() => window.localStorage.clear())
@@ -13,6 +18,7 @@ describe("HomeRoute", () => {
 		const { user } = renderWithProviders(
 			<FavoritesProvider>
 				<HomeRoute />
+				<LocationProbe />
 			</FavoritesProvider>,
 		)
 
@@ -29,5 +35,6 @@ describe("HomeRoute", () => {
 		await user.click(favoriteButton)
 
 		expect(favoriteButton).toHaveAttribute("aria-pressed", "true")
+		expect(screen.getByTestId("location")).toHaveTextContent("/")
 	})
 })

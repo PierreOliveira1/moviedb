@@ -1,11 +1,19 @@
-import { infiniteQueryOptions } from "@tanstack/react-query"
+import { infiniteQueryOptions, queryOptions } from "@tanstack/react-query"
 
-import { getPopularMovies, searchMovies } from "./movies-api"
+import { getMovieDetails, getPopularMovies, searchMovies } from "./movies-api"
 
 export const moviesQueryKeys = {
 	all: ["movies"] as const,
+	details: (movieId: number) => ["movies", "details", movieId] as const,
 	popular: ["movies", "popular"] as const,
 	search: (query: string) => ["movies", "search", query] as const,
+}
+
+export function movieDetailsQuery(movieId: number) {
+	return queryOptions({
+		queryKey: moviesQueryKeys.details(movieId),
+		queryFn: ({ signal }) => getMovieDetails(movieId, signal),
+	})
 }
 
 export function searchMoviesInfiniteQuery(query: string) {

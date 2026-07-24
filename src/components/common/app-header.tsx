@@ -1,7 +1,11 @@
 import { Clapperboard, Search } from "lucide-react"
 import { Form, Link, NavLink, useLocation, useSearchParams } from "react-router"
 
-export function AppHeader() {
+type AppHeaderProps = {
+	favoriteCount: number
+}
+
+export function AppHeader({ favoriteCount }: AppHeaderProps) {
 	const location = useLocation()
 	const [searchParams] = useSearchParams()
 	const currentQuery =
@@ -56,6 +60,7 @@ export function AppHeader() {
 					</NavLink>
 					<NavLink className={navLinkClassName} to="/favorites">
 						Favoritos
+						{favoriteCount > 0 && ` (${favoriteCount})`}
 					</NavLink>
 				</nav>
 			</div>
