@@ -9,6 +9,15 @@ A React Router, React 19, and TypeScript SPA for discovering and organizing movi
 
 ## Development
 
+Create a local `.env` file with a TMDB API read access token:
+
+```text
+VITE_TMDB_ACCESS_TOKEN=your_tmdb_read_access_token
+VITE_TMDB_API_BASE_URL=https://api.themoviedb.org/3
+```
+
+Then install dependencies and start the development server:
+
 ```bash
 pnpm install
 pnpm dev

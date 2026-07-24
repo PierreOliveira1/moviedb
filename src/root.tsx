@@ -9,6 +9,8 @@ import {
 	useRouteError,
 } from "react-router"
 
+import { AppShell } from "@/components/common/app-shell"
+import { FavoritesProvider } from "@/features/favorites/context/favorites-context"
 import { queryClient } from "@/query-client"
 
 import "./app.css"
@@ -34,14 +36,18 @@ export function Layout({ children }: { children: React.ReactNode }) {
 export default function Root() {
 	return (
 		<QueryClientProvider client={queryClient}>
-			<Outlet />
+			<FavoritesProvider>
+				<AppShell>
+					<Outlet />
+				</AppShell>
+			</FavoritesProvider>
 		</QueryClientProvider>
 	)
 }
 
 export function HydrateFallback() {
 	return (
-		<main className="grid min-h-screen place-items-center bg-slate-950 text-slate-100">
+		<main className="grid min-h-screen place-items-center bg-canvas text-content">
 			<p>Carregando...</p>
 		</main>
 	)
@@ -54,13 +60,13 @@ export function ErrorBoundary() {
 		: "Nao foi possivel carregar a pagina."
 
 	return (
-		<main className="grid min-h-screen place-items-center bg-slate-950 px-6 text-slate-100">
+		<main className="grid min-h-screen place-items-center bg-canvas px-6 text-content">
 			<section className="max-w-lg text-center">
-				<p className="text-sm font-semibold tracking-[0.3em] text-amber-400 uppercase">
+				<p className="text-sm font-semibold tracking-[0.3em] text-brand uppercase">
 					MovieDB
 				</p>
 				<h1 className="mt-4 text-4xl font-bold">Algo deu errado</h1>
-				<p className="mt-3 text-slate-400">{message}</p>
+				<p className="mt-3 text-content-muted">{message}</p>
 			</section>
 		</main>
 	)

@@ -8,6 +8,7 @@ module.exports = {
 	coverageDirectory: "coverage",
 	coverageProvider: "v8",
 	moduleNameMapper: {
+		"^@/shared/config/env$": "<rootDir>/src/shared/testing/env-mock.ts",
 		"^@/(.*)$": "<rootDir>/src/$1",
 		"\\.css$": "<rootDir>/src/shared/testing/style-mock.cjs",
 	},

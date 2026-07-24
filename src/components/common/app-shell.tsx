@@ -1,9 +1,14 @@
 import type { PropsWithChildren } from "react"
 
+import { AppHeader } from "./app-header"
+
 export function AppShell({ children }: PropsWithChildren) {
 	return (
-		<main className="min-h-screen bg-slate-950 px-6 py-16 text-slate-100">
-			<div className="mx-auto w-full max-w-6xl">{children}</div>
-		</main>
+		<div className="min-h-screen bg-canvas text-content">
+			<AppHeader />
+			<main className="mx-auto w-full max-w-[112rem] px-4 py-10 sm:px-6 sm:py-14 lg:px-10">
+				{children}
+			</main>
+		</div>
 	)
 }

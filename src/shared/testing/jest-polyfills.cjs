@@ -1,5 +1,9 @@
 const { Blob, File } = require("node:buffer")
-const { ReadableStream, TransformStream } = require("node:stream/web")
+const {
+	ReadableStream,
+	TransformStream,
+	WritableStream,
+} = require("node:stream/web")
 const { TextDecoder, TextEncoder } = require("node:util")
 const { BroadcastChannel, MessagePort } = require("node:worker_threads")
 
@@ -12,6 +16,7 @@ Object.assign(globalThis, {
 	TextDecoder,
 	TextEncoder,
 	TransformStream,
+	WritableStream,
 })
 
 const { fetch, FormData, Headers, Request, Response } = require("undici")
