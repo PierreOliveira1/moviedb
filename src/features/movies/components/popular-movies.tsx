@@ -1,5 +1,5 @@
 import { useInfiniteQuery } from "@tanstack/react-query"
-import { type ReactNode, useEffect, useEffectEvent, useRef } from "react"
+import type { ReactNode } from "react"
 
 import { EmptyState } from "@/components/ui/empty-state"
 import { ErrorState } from "@/components/ui/error-state"
@@ -8,6 +8,7 @@ import { popularMoviesInfiniteQuery } from "../api/movies-queries"
 import type { Movie } from "../model/movie"
 import { MovieGrid } from "./movie-grid"
 import { MovieGridSkeleton } from "./movie-grid-skeleton"
+import { useInfiniteScroll } from "./use-infinite-scroll"
 
 type PopularMoviesProps = {
 	renderFavoriteControl: (movie: Movie) => ReactNode
@@ -15,39 +16,12 @@ type PopularMoviesProps = {
 
 export function PopularMovies({ renderFavoriteControl }: PopularMoviesProps) {
 	const query = useInfiniteQuery(popularMoviesInfiniteQuery())
-	const loadMoreRef = useRef<HTMLDivElement>(null)
 	const movies = query.data?.pages.flatMap((page) => page.movies) ?? []
-
-	const loadNextPage = useEffectEvent(() => {
-		if (!query.hasNextPage || query.isFetchingNextPage) {
-			return
-		}
-
-		void query.fetchNextPage()
+	const loadMoreRef = useInfiniteScroll({
+		canLoadMore: Boolean(query.hasNextPage),
+		isLoading: query.isFetchingNextPage,
+		loadMore: query.fetchNextPage,
 	})
-
-	useEffect(() => {
-		const sentinel = loadMoreRef.current
-		if (
-			!sentinel ||
-			!query.hasNextPage ||
-			!("IntersectionObserver" in window)
-		) {
-			return
-		}
-
-		const observer = new IntersectionObserver(
-			(entries) => {
-				if (entries[0]?.isIntersecting) {
-					loadNextPage()
-				}
-			},
-			{ rootMargin: "400px 0px" },
-		)
-
-		observer.observe(sentinel)
-		return () => observer.disconnect()
-	}, [query.hasNextPage])
 
 	return (
 		<section aria-labelledby="popular-movies-title">

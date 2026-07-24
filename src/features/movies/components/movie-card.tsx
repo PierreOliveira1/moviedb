@@ -10,9 +10,10 @@ import { MovieRating } from "./movie-rating"
 type MovieCardProps = {
 	movie: Movie
 	favoriteControl: ReactNode
+	title?: ReactNode
 }
 
-export function MovieCard({ movie, favoriteControl }: MovieCardProps) {
+export function MovieCard({ movie, favoriteControl, title }: MovieCardProps) {
 	const posterUrl = getMoviePosterUrl(movie.posterPath)
 	const [imageStatus, setImageStatus] = useState<
 		"loading" | "loaded" | "error"
@@ -55,7 +56,7 @@ export function MovieCard({ movie, favoriteControl }: MovieCardProps) {
 
 			<div className="min-h-24 border-t border-border px-4 py-3">
 				<h2 className="line-clamp-2 text-sm leading-5 font-semibold text-content sm:text-base">
-					{movie.title}
+					{title ?? movie.title}
 				</h2>
 				<p className="mt-1 text-sm text-content-muted">
 					{movie.releaseYear ?? "Ano desconhecido"}

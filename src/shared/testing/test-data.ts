@@ -26,3 +26,18 @@ export const popularMoviesResponse = {
 	total_pages: 2,
 	total_results: 23,
 }
+
+export const searchMoviesResponse = {
+	page: 1,
+	results: [
+		{
+			id: 693134,
+			poster_path: "/dune-part-two.jpg",
+			release_date: "2024-02-27",
+			title: "Dune: Part Two",
+			vote_average: 8.3,
+		},
+	],
+	total_pages: 1,
+	total_results: 1,
+}

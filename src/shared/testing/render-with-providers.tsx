@@ -13,10 +13,15 @@ type RenderWithProvidersResult = RenderResult & {
 	user: ReturnType<typeof userEvent.setup>
 }
 
+type RenderWithProvidersOptions = Omit<RenderOptions, "wrapper"> & {
+	route?: string
+}
+
 export function renderWithProviders(
 	ui: ReactElement,
-	options?: Omit<RenderOptions, "wrapper">,
+	options: RenderWithProvidersOptions = {},
 ): RenderWithProvidersResult {
+	const { route = "/", ...renderOptions } = options
 	const queryClient = new QueryClient({
 		defaultOptions: {
 			queries: {
@@ -28,9 +33,9 @@ export function renderWithProviders(
 	return {
 		...render(
 			<QueryClientProvider client={queryClient}>
-				<MemoryRouter>{ui}</MemoryRouter>
+				<MemoryRouter initialEntries={[route]}>{ui}</MemoryRouter>
 			</QueryClientProvider>,
-			options,
+			renderOptions,
 		),
 		queryClient,
 		user: userEvent.setup(),

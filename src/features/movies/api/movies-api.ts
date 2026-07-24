@@ -26,3 +26,28 @@ export async function getPopularMovies(
 
 	return mapMoviePageDto(response)
 }
+
+export async function searchMovies(
+	query: string,
+	page: number,
+	signal?: AbortSignal,
+): Promise<PaginatedMovies> {
+	const searchParams = new URLSearchParams({
+		include_adult: "false",
+		language: "pt-BR",
+		page: String(page),
+		query,
+	})
+	const response = await httpClient<MoviePageDto>(
+		`${getTmdbApiBaseUrl()}/search/movie?${searchParams}`,
+		{
+			headers: {
+				Accept: "application/json",
+				Authorization: `Bearer ${getTmdbAccessToken()}`,
+			},
+			signal,
+		},
+	)
+
+	return mapMoviePageDto(response)
+}

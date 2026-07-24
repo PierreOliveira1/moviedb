@@ -6,9 +6,14 @@ import { MovieCard } from "./movie-card"
 type MovieGridProps = {
 	movies: Movie[]
 	renderFavoriteControl: (movie: Movie) => ReactNode
+	renderTitle?: (movie: Movie) => ReactNode
 }
 
-export function MovieGrid({ movies, renderFavoriteControl }: MovieGridProps) {
+export function MovieGrid({
+	movies,
+	renderFavoriteControl,
+	renderTitle,
+}: MovieGridProps) {
 	return (
 		<div className="grid grid-cols-[repeat(auto-fill,minmax(9.5rem,1fr))] gap-4 sm:grid-cols-[repeat(auto-fill,minmax(11rem,1fr))] sm:gap-5">
 			{movies.map((movie) => (
@@ -16,6 +21,7 @@ export function MovieGrid({ movies, renderFavoriteControl }: MovieGridProps) {
 					favoriteControl={renderFavoriteControl(movie)}
 					key={movie.id}
 					movie={movie}
+					title={renderTitle?.(movie)}
 				/>
 			))}
 		</div>

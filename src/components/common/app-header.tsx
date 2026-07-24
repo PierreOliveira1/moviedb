@@ -5,7 +5,7 @@ export function AppHeader() {
 	const location = useLocation()
 	const [searchParams] = useSearchParams()
 	const currentQuery =
-		location.pathname === "/search" ? (searchParams.get("query") ?? "") : ""
+		location.pathname === "/search" ? (searchParams.get("q") ?? "") : ""
 	const navLinkClassName = ({ isActive }: { isActive: boolean }) =>
 		`rounded-lg px-4 py-2 text-sm font-medium transition ${
 			isActive
@@ -39,7 +39,8 @@ export function AppHeader() {
 						<input
 							className="h-12 w-full rounded-xl border border-border bg-surface pr-4 pl-12 text-sm text-content outline-none transition placeholder:text-content-muted/70 focus:border-brand/60 focus:ring-2 focus:ring-brand/15"
 							defaultValue={currentQuery}
-							name="query"
+							key={currentQuery}
+							name="q"
 							placeholder="Buscar filmes..."
 							type="search"
 						/>
