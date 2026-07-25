@@ -1,5 +1,5 @@
 import { ImageOff } from "lucide-react"
-import { type ReactNode, useState } from "react"
+import { type CSSProperties, type ReactNode, useState } from "react"
 import { Link } from "react-router"
 
 import { Skeleton } from "@/components/ui/skeleton"
@@ -21,7 +21,14 @@ export function MovieCard({ movie, favoriteControl, title }: MovieCardProps) {
 	>(posterUrl ? "loading" : "error")
 
 	return (
-		<article className="group relative cursor-pointer overflow-hidden rounded-card border border-border bg-surface shadow-card transition duration-300 hover:-translate-y-1 hover:border-brand/30 focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-brand">
+		<article
+			className="movie-card group relative cursor-pointer overflow-hidden rounded-card border border-border bg-surface shadow-card transition duration-300 hover:-translate-y-1 hover:border-brand/30 focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-brand"
+			style={
+				{
+					"--movie-card-transition-name": `movie-card-${movie.id}`,
+				} as CSSProperties
+			}
+		>
 			<Link
 				aria-label={`Ver detalhes de ${movie.title}`}
 				className="block rounded-card outline-none"
@@ -31,8 +38,12 @@ export function MovieCard({ movie, favoriteControl, title }: MovieCardProps) {
 				viewTransition
 			>
 				<div
-					className="relative aspect-[2/3] overflow-hidden bg-surface-raised"
-					style={{ viewTransitionName: `movie-poster-${movie.id}` }}
+					className="movie-card-poster relative aspect-[2/3] overflow-hidden bg-surface-raised"
+					style={
+						{
+							"--movie-poster-transition-name": `movie-poster-${movie.id}`,
+						} as CSSProperties
+					}
 				>
 					{posterUrl && imageStatus !== "error" ? (
 						<>
@@ -67,8 +78,12 @@ export function MovieCard({ movie, favoriteControl, title }: MovieCardProps) {
 
 				<div className="min-h-24 border-t border-border px-4 py-3">
 					<h2
-						className="line-clamp-2 text-sm leading-5 font-semibold text-content sm:text-base"
-						style={{ viewTransitionName: `movie-title-${movie.id}` }}
+						className="movie-card-title line-clamp-2 text-sm leading-5 font-semibold text-content sm:text-base"
+						style={
+							{
+								"--movie-title-transition-name": `movie-title-${movie.id}`,
+							} as CSSProperties
+						}
 					>
 						{title ?? movie.title}
 					</h2>

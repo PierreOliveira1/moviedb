@@ -8,6 +8,31 @@ export type Movie = {
 
 export type MoviePreview = Movie
 
+export type MovieSort =
+	| "title-ascending"
+	| "title-descending"
+	| "rating-descending"
+	| "rating-ascending"
+
+export function sortMovies(movies: Movie[], sort: MovieSort): Movie[] {
+	const sortedMovies = [...movies]
+
+	sortedMovies.sort((firstMovie, secondMovie) => {
+		switch (sort) {
+			case "title-descending":
+				return secondMovie.title.localeCompare(firstMovie.title, "pt-BR")
+			case "rating-descending":
+				return secondMovie.voteAverage - firstMovie.voteAverage
+			case "rating-ascending":
+				return firstMovie.voteAverage - secondMovie.voteAverage
+			default:
+				return firstMovie.title.localeCompare(secondMovie.title, "pt-BR")
+		}
+	})
+
+	return sortedMovies
+}
+
 export type PaginatedMovies = {
 	movies: Movie[]
 	page: number

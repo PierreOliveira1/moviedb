@@ -1,5 +1,12 @@
 import { Clapperboard, Search } from "lucide-react"
-import { Form, Link, NavLink, useLocation, useSearchParams } from "react-router"
+import {
+	Form,
+	Link,
+	NavLink,
+	useLocation,
+	useNavigate,
+	useSearchParams,
+} from "react-router"
 
 type AppHeaderProps = {
 	favoriteCount: number
@@ -7,6 +14,7 @@ type AppHeaderProps = {
 
 export function AppHeader({ favoriteCount }: AppHeaderProps) {
 	const location = useLocation()
+	const navigate = useNavigate()
 	const [searchParams] = useSearchParams()
 	const currentQuery =
 		location.pathname === "/search" ? (searchParams.get("q") ?? "") : ""
@@ -23,6 +31,7 @@ export function AppHeader({ favoriteCount }: AppHeaderProps) {
 				<Link
 					className="flex shrink-0 items-center gap-2 text-lg font-bold tracking-tight text-brand sm:text-xl"
 					to="/"
+					viewTransition
 				>
 					<Clapperboard className="size-6" aria-hidden="true" />
 					MovieDB
@@ -45,6 +54,14 @@ export function AppHeader({ favoriteCount }: AppHeaderProps) {
 							defaultValue={currentQuery}
 							key={currentQuery}
 							name="q"
+							onChange={(event) => {
+								if (
+									location.pathname === "/search" &&
+									event.target.value === ""
+								) {
+									navigate("/", { viewTransition: true })
+								}
+							}}
 							placeholder="Buscar filmes..."
 							type="search"
 						/>
@@ -55,10 +72,10 @@ export function AppHeader({ favoriteCount }: AppHeaderProps) {
 					aria-label="Navegação principal"
 					className="ml-auto flex items-center gap-1"
 				>
-					<NavLink className={navLinkClassName} end to="/">
+					<NavLink className={navLinkClassName} end to="/" viewTransition>
 						Início
 					</NavLink>
-					<NavLink className={navLinkClassName} to="/favorites">
+					<NavLink className={navLinkClassName} to="/favorites" viewTransition>
 						Favoritos
 						{favoriteCount > 0 && ` (${favoriteCount})`}
 					</NavLink>

@@ -75,6 +75,32 @@
 	animation-timing-function: ease-out;
 }
 
+.movie-card-poster {
+	view-transition-name: var(--movie-poster-transition-name);
+}
+
+.movie-card-title {
+	view-transition-name: var(--movie-title-transition-name);
+}
+
+:root[data-view-transition="favorites-sort"] .movie-card {
+	view-transition-name: var(--movie-card-transition-name);
+}
+
+:root[data-view-transition="favorites-sort"] .movie-card-poster,
+:root[data-view-transition="favorites-sort"] .movie-card-title {
+	view-transition-name: none;
+}
+
+:root[data-view-transition="favorites-sort"]::view-transition-old(root) {
+	animation: none;
+	opacity: 0;
+}
+
+:root[data-view-transition="favorites-sort"]::view-transition-new(root) {
+	animation: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
 	::view-transition-old(*),
 	::view-transition-new(*) {
